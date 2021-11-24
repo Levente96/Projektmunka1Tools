@@ -45,10 +45,10 @@ while all_data < 900000:
                                     CART_ID=cart,
                                     ORDER_PRICE=order_sum,
                                     PRIORITY=printer_flow[random.randint(0, 3)],
-                                    MANUFACTURED=True if random.randint(0, 1) == 0 else False,
-                                    SHIPPED=True if random.randint(0, 1) == 0 else False,
-                                    DELIVERED = True if random.randint(0, 1) == 0 else False,
-                                    FAILED=False) 
+                                    MANUFACTURED='\x01' if random.randint(0, 1) == 0 else '\x00',
+                                    SHIPPED='\x01' if random.randint(0, 1) == 0 else '\x00',
+                                    DELIVERED = '\x01' if random.randint(0, 1) == 0 else '\x00',
+                                    FAILED='\x00') 
     result = connection.execute(query)
     all_data += 1
     if all_data % 10 == 0:
