@@ -33,6 +33,7 @@ while all_data < 900000:
     plastic = random.randint(1, 3)
     cart = random.randint(1, all_carts-1)
     order_sum = 0
+    order_status = random.randint(0,3)
 
     for row in session.query(carts).filter(carts.c.CART_ID == cart).all():
             item = session.query(models).filter(models.c.MODELL_ID == row[1]).one()
@@ -45,9 +46,9 @@ while all_data < 900000:
                                     CART_ID=cart,
                                     ORDER_PRICE=order_sum,
                                     PRIORITY=printer_flow[random.randint(0, 3)],
-                                    MANUFACTURED='\x01' if random.randint(0, 1) == 0 else '\x00',
-                                    SHIPPED='\x01' if random.randint(0, 1) == 0 else '\x00',
-                                    DELIVERED = '\x01' if random.randint(0, 1) == 0 else '\x00',
+                                    MANUFACTURED='\x01' if order_status >= 1 else '\x00',
+                                    SHIPPED='\x01' if order_status >= 2 else '\x00',
+                                    DELIVERED = '\x01' if order_status >= 3 else '\x00',
                                     FAILED='\x00') 
     result = connection.execute(query)
     all_data += 1
